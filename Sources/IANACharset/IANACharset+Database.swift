@@ -62,6 +62,9 @@ extension IANACharset {
       self.name = name
       self.mibEnum = mibEnum
       self.preferredMIMEName = row[.preferredMIMEName]
+        .flatMap {
+          !$0.isEmpty ? $0 : nil
+        }
       self.aliases = row[.aliases]
         .map { $0
           .components(separatedBy: "\n")

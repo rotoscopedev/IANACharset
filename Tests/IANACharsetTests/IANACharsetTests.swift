@@ -105,4 +105,21 @@ final class IANACharsetTests: XCTestCase {
     let charset: IANACharset = 3
     expect(charset) == .usASCII
   }
+  
+  // MARK: -
+  
+  func test_preferredMIMEName() {
+    let charset: IANACharset = .iso8859_1_1987
+    expect(charset.preferredMIMEName) == "ISO-8859-1"
+  }
+  
+  func test_preferredMIMENameEmpty() {
+    let charset: IANACharset = .utf8
+    expect(charset.preferredMIMEName).to(beNil())
+  }
+  
+  func test_preferredName() {
+    expect(IANACharset.iso8859_1_1987.preferredName) == "ISO-8859-1"
+    expect(IANACharset.utf8.preferredName) == "UTF-8"
+  }
 }
