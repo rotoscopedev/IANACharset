@@ -97,8 +97,8 @@ extension IANACharset {
 
   /// Parses the contents of the database file at the given URL.
   private static func parse(contentsOf url: URL) throws -> [Self: Record] {
-    return try CSV(url: url)
-      .namedRows
+    return try CSV<Named>(url: url)
+      .rows
       .reduce(into: []) {
         $0.append(try Record(from: $1))
       }
