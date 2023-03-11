@@ -224,9 +224,12 @@ extension IANACharset: ExpressibleByStringLiteral {
   /// Creates an instance initialized with the given string literal. Failure
   /// to map `value` to a charset is considered a programmer error and results
   /// in a run-time error.
-  public init(stringLiteral value: StaticString) {
-    guard let charset = Self(string: "\(value)") else {
-      preconditionFailure("\"\(value)\" is not a valid IANA charset.")
+  public init(stringLiteral: StaticString) {
+    let string = stringLiteral.withUTF8Buffer {
+      String(decoding: $0, as: UTF8.self)
+    }
+    guard let charset = Self(string: string) else {
+      preconditionFailure("\"\(string)\" is not a valid IANA charset.")
     }
     self = charset
   }
