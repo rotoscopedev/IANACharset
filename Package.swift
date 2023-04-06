@@ -13,7 +13,7 @@ let package = Package(
       targets: ["IANACharset"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/Quick/Nimble.git", from: "9.0.0"),
+    .package(url: "https://github.com/Quick/Nimble.git", from: "11.2.0"),
     .package(url: "https://github.com/swiftcsv/SwiftCSV.git", from: "0.6.1"),
   ],
   targets: [
