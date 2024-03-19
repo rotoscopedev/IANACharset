@@ -287,6 +287,7 @@ public enum IANACharset: Int {
 
 extension IANACharset: Equatable {}
 extension IANACharset: Hashable {}
+extension IANACharset: Sendable {}
 extension IANACharset: CaseIterable {}
 
 // MARK: -
