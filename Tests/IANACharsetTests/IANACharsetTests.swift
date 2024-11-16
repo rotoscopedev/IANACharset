@@ -21,105 +21,104 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import Nimble
-import XCTest
+import Testing
 
 @testable import IANACharset
 
-final class IANACharsetTests: XCTestCase {
+struct IANACharsetTests {
   
-  func test_initWithName() {
+  @Test func initWithName() {
     let charset = IANACharset(string: "UTF-8")
-    expect(charset).toNot(beNil())
-    expect(charset) == .utf8
+    #expect(charset != nil)
+    #expect(charset == .utf8)
   }
   
-  func test_initWithLowercaseName() {
+  @Test func initWithLowercaseName() {
     let charset = IANACharset(string: "utf-8")
-    expect(charset).toNot(beNil())
-    expect(charset) == .utf8
+    #expect(charset != nil)
+    #expect(charset == .utf8)
   }
   
-  func test_initWithPreferredMIMEName() {
+  @Test func initWithPreferredMIMEName() {
     let charset = IANACharset(string: "ISO-8859-1")
-    expect(charset).toNot(beNil())
-    expect(charset) == .iso8859_1_1987
+    #expect(charset != nil)
+    #expect(charset == .iso8859_1_1987)
   }
   
-  func test_initWithLowercasePreferredMIMEName() {
+  @Test func initWithLowercasePreferredMIMEName() {
     let charset = IANACharset(string: "iso-8859-1")
-    expect(charset).toNot(beNil())
-    expect(charset) == .iso8859_1_1987
+    #expect(charset != nil)
+    #expect(charset == .iso8859_1_1987)
   }
 
-  func test_initWithAlias() {
+  @Test func initWithAlias() {
     let charset = IANACharset(string: "ANSI_X3.4-1968")
-    expect(charset).toNot(beNil())
-    expect(charset) == .usASCII
+    #expect(charset != nil)
+    #expect(charset == .usASCII)
   }
 
-  func test_initWithLowercaseAlias() {
+  @Test func initWithLowercaseAlias() {
     let charset = IANACharset(string: "ansi_x3.4-1968")
-    expect(charset).toNot(beNil())
-    expect(charset) == .usASCII
+    #expect(charset != nil)
+    #expect(charset == .usASCII)
   }
   
-  func test_initWithMIBEnum() {
+  @Test func initWithMIBEnum() {
     let charset = IANACharset(mibEnum: 3)
-    expect(charset).toNot(beNil())
-    expect(charset) == .usASCII
+    #expect(charset != nil)
+    #expect(charset == .usASCII)
   }
 
-  func test_initWithInvalidName() {
+  @Test func initWithInvalidName() {
     let charset = IANACharset(string: "this-is-not-a-valid-charset")
-    expect(charset).to(beNil())
+    #expect(charset == nil)
   }
   
-  func test_initWithInvalidMIBEnum() {
+  @Test func initWithInvalidMIBEnum() {
     let charset = IANACharset(mibEnum: 99999)
-    expect(charset).to(beNil())
+    #expect(charset == nil)
   }
 
   // MARK: -
   
-  func test_initWithStringEncoding() {
+  @Test func initWithStringEncoding() {
     let charset = IANACharset(encoding: .utf8)
-    expect(charset).toNot(beNil())
-    expect(charset) == .utf8
+    #expect(charset != nil)
+    #expect(charset == .utf8)
   }
   
-  func test_initStringEncodingWithCharset() {
+  @Test func initStringEncodingWithCharset() {
     let encoding = String.Encoding(charset: .utf8)
-    expect(encoding).toNot(beNil())
-    expect(encoding) == .utf8
+    #expect(encoding != nil)
+    #expect(encoding == .utf8)
   }
   
   // MARK: -
   
-  func test_initWithStringLiteral() {
+  @Test func initWithStringLiteral() {
     let charset: IANACharset = "UTF-8"
-    expect(charset) == .utf8
+    #expect(charset == .utf8)
   }
   
-  func test_initWithIntegerLiteral() {
+  @Test func initWithIntegerLiteral() {
     let charset: IANACharset = 3
-    expect(charset) == .usASCII
+    #expect(charset == .usASCII)
   }
   
   // MARK: -
   
-  func test_preferredMIMEName() {
+  @Test func preferredMIMEName() {
     let charset: IANACharset = .iso8859_1_1987
-    expect(charset.preferredMIMEName) == "ISO-8859-1"
+    #expect(charset.preferredMIMEName == "ISO-8859-1")
   }
   
-  func test_preferredMIMENameEmpty() {
+  @Test func preferredMIMENameEmpty() {
     let charset: IANACharset = .utf8
-    expect(charset.preferredMIMEName).to(beNil())
+    #expect(charset.preferredMIMEName == nil)
   }
   
-  func test_preferredName() {
-    expect(IANACharset.iso8859_1_1987.preferredName) == "ISO-8859-1"
-    expect(IANACharset.utf8.preferredName) == "UTF-8"
+  @Test func preferredName() {
+    #expect(IANACharset.iso8859_1_1987.preferredName == "ISO-8859-1")
+    #expect(IANACharset.utf8.preferredName == "UTF-8")
   }
 }
