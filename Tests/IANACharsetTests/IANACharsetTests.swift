@@ -25,7 +25,7 @@ import Testing
 
 @testable import IANACharset
 
-struct IANACharsetTests {
+@Suite("IANACharset") struct IANACharsetTests {
   
   @Test func initWithName() {
     let charset = IANACharset(string: "UTF-8")
