@@ -27,6 +27,7 @@ import SwiftCSV
 extension IANACharset {
   
   /// Error raised in response to database parsing errors.
+  ///
   private enum DatabaseError: Error {
     case invalidFormat
     case unrecognizedCharset(Int)
@@ -48,6 +49,7 @@ extension String {
 extension IANACharset {
 
   /// Internal struct that contains information about a charset.
+  ///
   private struct Record {
     let name: String
     let mibEnum: Int
@@ -77,6 +79,7 @@ extension IANACharset {
     
     /// Returns a set that combines the record's name, preferred MIME name
     /// and aliases.
+    ///
     var allNames: Set<String> {
       get {
         var names: Set<String> = [ name ]
@@ -96,6 +99,7 @@ extension IANACharset {
 extension IANACharset {
 
   /// Parses the contents of the database file at the given URL.
+  ///
   private static func parse(contentsOf url: URL) throws -> [Self: Record] {
     return try CSV<Named>(url: url)
       .rows
@@ -111,6 +115,7 @@ extension IANACharset {
   }
   
   /// Validates the contents of the given database.
+  ///
   private static func validate(_ database: [Self: Record]) throws -> [Self: Record] {
     try Self
       .allCases
@@ -128,6 +133,7 @@ extension IANACharset {
 extension IANACharset {
   
   /// Returns the URL of the database file.
+  ///
   private static var databaseURL: URL? {
     get {
       return Bundle.module.url(forResource: "character-sets-1", withExtension: "csv")
@@ -135,6 +141,7 @@ extension IANACharset {
   }
 
   /// In-memory mapping of IANA charset database.
+  ///
   private static let database: [Self: Record] = {
     guard let url = databaseURL else {
       fatalError("IANA charset database not found.")
@@ -152,6 +159,7 @@ extension IANACharset {
 extension IANACharset {
   
   /// Returns the name of the charset.
+  ///
   public var name: String {
     get {
       return Self.database[self]!.name
@@ -160,6 +168,7 @@ extension IANACharset {
   
   /// Returns the charset's preferred MIME name, or `nil` if the charset does
   /// not have a preferred MIME name.
+  ///
   public var preferredMIMEName: String? {
     get {
       return Self.database[self]!.preferredMIMEName
@@ -170,6 +179,7 @@ extension IANACharset {
   ///
   /// Returns `preferredMIMEName` if available, defaulting to `name` if no
   /// preferred MIME name is defined.
+  ///
   public var preferredName: String {
     get {
       return preferredMIMEName ?? name
@@ -177,6 +187,7 @@ extension IANACharset {
   }
   
   /// Returns the charset's aliases.
+  ///
   public var aliases: Set<String> {
     get {
       return Self.database[self]!.aliases
@@ -185,6 +196,7 @@ extension IANACharset {
   
   /// Returns a set that combines the record's name, preferred MIME name
   /// and aliases.
+  ///
   public var allNames: Set<String> {
     get {
       return Self.database[self]!.allNames
@@ -197,6 +209,7 @@ extension IANACharset {
 extension IANACharset {
   
   /// Case-independent map used to look up charsets by name.
+  ///
   private static let map: [String: Self] = {
     return database.reduce(into: [:]) { map, element in
       element.value
@@ -210,6 +223,7 @@ extension IANACharset {
   
   /// Initializes the receiver from the given string, attempting to map from
   /// name, preferred MIME name and aliases.
+  ///
   public init?(string: String) {
     guard !string.isEmpty else { return nil }
     guard let charset = Self.map[string.lowercased()] else { return nil }
@@ -224,6 +238,7 @@ extension IANACharset: ExpressibleByStringLiteral {
   /// Creates an instance initialized with the given string literal. Failure
   /// to map `value` to a charset is considered a programmer error and results
   /// in a run-time error.
+  ///
   public init(stringLiteral: StaticString) {
     let string = stringLiteral.withUTF8Buffer {
       String(decoding: $0, as: UTF8.self)
@@ -240,6 +255,7 @@ extension IANACharset: ExpressibleByStringLiteral {
 extension IANACharset: CustomStringConvertible {
   
   /// Returns the charset's humanly-readable name.
+  /// 
   public var description: String {
     get {
       return name

@@ -27,6 +27,7 @@ extension String.Encoding {
   
   /// Initializes the receiver with the given IANA charset. Returns `nil` if
   /// `charset` could not be mapped to string encoding.
+  ///
   public init?(charset: IANACharset) {
     for name in charset.allNames {
       let encoding = CFStringConvertIANACharSetNameToEncoding(name as CFString)
@@ -45,6 +46,7 @@ extension IANACharset {
   
   /// Initializes the receiver with the given string encoding. Returns `nil` if
   /// `encoding` could not be mapped to an IANA charset.
+  /// 
   public init?(encoding: String.Encoding) {
     let encoding = CFStringConvertNSStringEncodingToEncoding(encoding.rawValue)
     if encoding == kCFStringEncodingInvalidId {

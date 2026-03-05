@@ -27,6 +27,7 @@ extension IANACharset: Codable {
   ///
   /// - parameters:
   ///   - encoder: The encoder to write data to.
+  ///
   public func encode(to encoder: Encoder) throws {
     var container = encoder.singleValueContainer()
     try container.encode(name)
@@ -36,6 +37,7 @@ extension IANACharset: Codable {
   ///
   /// - parameters:
   ///   - decoder: The decoder to read data from.
+  ///   
   public init(from decoder: Decoder) throws {
     let container = try decoder.singleValueContainer()
     let name = try container.decode(String.self)

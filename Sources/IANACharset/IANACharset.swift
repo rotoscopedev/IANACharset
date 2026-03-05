@@ -22,6 +22,7 @@
 // SOFTWARE.
 
 /// Enumeration of [IANA charsets](https://www.iana.org/assignments/character-sets/character-sets.xhtml).
+///
 public enum IANACharset: Int {
   case usASCII = 3
   case iso8859_1_1987 = 4
@@ -296,6 +297,7 @@ extension IANACharset {
   
   /// Initializes the receiver from the given MIBenum value. Returns `nil` if
   /// `mibEnum` is not a recognized IANA charset.
+  ///
   public init?(mibEnum: Int) {
     guard let charset = Self(rawValue: mibEnum) else {
       return nil
@@ -304,6 +306,7 @@ extension IANACharset {
   }
   
   /// Returns the charset's MIBenum value, which is the same as the `rawValue`.
+  ///
   public var mibEnum: Int {
     get {
       return rawValue
@@ -326,6 +329,7 @@ extension IANACharset: ExpressibleByIntegerLiteral {
   /// literal initializer behind the scenes.
   ///
   /// - Parameter value: The value to create.
+  /// 
   public init(integerLiteral value: Int) {
     guard let charset = Self(mibEnum: value) else {
       preconditionFailure("\(value) is not a valid MIB enum.")
